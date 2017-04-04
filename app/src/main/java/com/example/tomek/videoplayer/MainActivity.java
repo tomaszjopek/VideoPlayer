@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.gridView);
         gridView.setAdapter(new MyAdapter(getImages(), this));
         gridView.setLongClickable(true);
+        gridView.setClickable(true);
 
 
         gridView.setOnItemClickListener((parent, v, position, id) -> {
@@ -61,16 +62,6 @@ public class MainActivity extends AppCompatActivity {
         gridView.setOnItemLongClickListener(myOnLongClikckListener);
         gridView.setOnTouchListener(myOnLongClikckListener.getReleaseListener());
 
-/*        Runnable tmpThread = new Runnable() {
-            @Override
-            public void run() {
-                int first = gridView.getFirstVisiblePosition();
-                gridView.smoothScrollToPosition(first);
-                handler.postDelayed(this, 1000);
-            }
-        };
-
-        handler.postDelayed(tmpThread, 1000);*/
     }
 
     private ArrayList<Integer> getImages() {

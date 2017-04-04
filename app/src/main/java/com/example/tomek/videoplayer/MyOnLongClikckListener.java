@@ -1,6 +1,7 @@
 package com.example.tomek.videoplayer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
@@ -75,6 +76,7 @@ public class MyOnLongClikckListener implements AdapterView.OnItemLongClickListen
         return mReleaseListener;
     }
 
+
     private class OnReleaseListener implements View.OnTouchListener {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -88,8 +90,8 @@ public class MyOnLongClikckListener implements AdapterView.OnItemLongClickListen
                 }
 
                 int first = gridView.getFirstVisiblePosition();
-                //gridView.smoothScrollToPosition(first);
-                gridView.smoothScrollToPositionFromTop(first, 0, 200);
+                gridView.smoothScrollToPosition(first);
+             //   gridView.smoothScrollToPositionFromTop(first, 0, 200);
 
             }
             return false;
