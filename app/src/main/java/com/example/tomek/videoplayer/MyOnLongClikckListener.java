@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -27,13 +28,15 @@ public class MyOnLongClikckListener implements AdapterView.OnItemLongClickListen
     private Context mContext;
     private int position;
     private ImageView holder;
+    private GridView gridView;
     private View.OnTouchListener mReleaseListener = new OnReleaseListener();
 
-    public MyOnLongClikckListener(List<String> videos, Runnable thread, Handler handler, Context mContext) {
+    public MyOnLongClikckListener(List<String> videos, Runnable thread, Handler handler, Context mContext, GridView gridView) {
         this.videos = videos;
         this.thread = thread;
         this.handler = handler;
         this.mContext = mContext;
+        this.gridView = gridView;
     }
 
     @Override
@@ -83,6 +86,11 @@ public class MyOnLongClikckListener implements AdapterView.OnItemLongClickListen
                     holder.setImageDrawable(drawable);
                     return true;
                 }
+
+                int first = gridView.getFirstVisiblePosition();
+                gridView.smoothScrollToPosition(first);
+
+
             }
             return false;
         }

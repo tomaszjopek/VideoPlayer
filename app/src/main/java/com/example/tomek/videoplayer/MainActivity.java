@@ -2,14 +2,20 @@ package com.example.tomek.videoplayer;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -26,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     final Handler handler = new Handler();
     private Runnable thread;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +50,27 @@ public class MainActivity extends AppCompatActivity {
         gridView.setAdapter(new MyAdapter(getImages(), this));
         gridView.setLongClickable(true);
 
+
         gridView.setOnItemClickListener((parent, v, position, id) -> {
             Intent intent = new Intent(this, DetailsActivity.class);
             intent.putExtra("position", position);
             startActivity(intent);
         });
 
-        MyOnLongClikckListener myOnLongClikckListener = new MyOnLongClikckListener(videos,thread,handler,this);
+        MyOnLongClikckListener myOnLongClikckListener = new MyOnLongClikckListener(videos,thread,handler,this, gridView);
         gridView.setOnItemLongClickListener(myOnLongClikckListener);
         gridView.setOnTouchListener(myOnLongClikckListener.getReleaseListener());
 
+/*        Runnable tmpThread = new Runnable() {
+            @Override
+            public void run() {
+                int first = gridView.getFirstVisiblePosition();
+                gridView.smoothScrollToPosition(first);
+                handler.postDelayed(this, 1000);
+            }
+        };
+
+        handler.postDelayed(tmpThread, 1000);*/
     }
 
     private ArrayList<Integer> getImages() {
@@ -100,5 +118,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }
