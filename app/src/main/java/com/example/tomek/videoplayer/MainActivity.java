@@ -52,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
         gridView.setClickable(true);
 
 
-        gridView.setOnItemClickListener((parent, v, position, id) -> {
+/*        gridView.setOnItemClickListener((parent, v, position, id) -> {
             Intent intent = new Intent(this, DetailsActivity.class);
             intent.putExtra("position", position);
             startActivity(intent);
-        });
+        });*/
 
         MyOnLongClikckListener myOnLongClikckListener = new MyOnLongClikckListener(videos,thread,handler,this, gridView);
         gridView.setOnItemLongClickListener(myOnLongClikckListener);

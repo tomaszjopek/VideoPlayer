@@ -1,5 +1,6 @@
 package com.example.tomek.videoplayer;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,7 +32,26 @@ public class MyOnLongClikckListener implements AdapterView.OnItemLongClickListen
     private int position;
     private ImageView holder;
     private GridView gridView;
+    private GestureDetector mTapDetector;
     private View.OnTouchListener mReleaseListener = new OnReleaseListener();
+
+    class GestureTap extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            int position = gridView.pointToPosition((int) e.getX(), (int)e.getY());
+            Intent intent = new Intent(mContext, DetailsActivity.class);
+            intent.putExtra("position", position);
+            mContext.startActivity(intent);
+            return true;
+        }
+    }
+
 
     public MyOnLongClikckListener(List<String> videos, Runnable thread, Handler handler, Context mContext, GridView gridView) {
         this.videos = videos;
@@ -38,6 +59,7 @@ public class MyOnLongClikckListener implements AdapterView.OnItemLongClickListen
         this.handler = handler;
         this.mContext = mContext;
         this.gridView = gridView;
+        mTapDetector = new GestureDetector(mContext, new GestureTap());
     }
 
     @Override
@@ -90,10 +112,14 @@ public class MyOnLongClikckListener implements AdapterView.OnItemLongClickListen
                 }
 
                 int first = gridView.getFirstVisiblePosition();
-                gridView.smoothScrollToPosition(first);
-             //   gridView.smoothScrollToPositionFromTop(first, 0, 200);
+             //   gridView.smoothScrollToPosition(first);
+                gridView.smoothScrollToPositionFromTop(first, 0, 200);
 
             }
+            else if(motionEvent.getAction() == MotionEvent.ACTION_DOWN);{
+               mTapDetector.onTouchEvent(motionEvent);
+            }
+
             return false;
         }
     }
