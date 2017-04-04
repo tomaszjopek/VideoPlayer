@@ -88,8 +88,8 @@ public class MyOnLongClikckListener implements AdapterView.OnItemLongClickListen
                 }
 
                 int first = gridView.getFirstVisiblePosition();
-                gridView.smoothScrollToPosition(first);
-
+                //gridView.smoothScrollToPosition(first);
+                gridView.smoothScrollToPositionFromTop(first, 0, 200);
 
             }
             return false;
