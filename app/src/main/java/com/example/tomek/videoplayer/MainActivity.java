@@ -2,25 +2,16 @@ package com.example.tomek.videoplayer;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.media.MediaMetadataRetriever;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,36 +53,6 @@ public class MainActivity extends AppCompatActivity {
         gridView.setOnItemLongClickListener(myOnLongClikckListener);
         gridView.setOnTouchListener(myOnLongClikckListener.getReleaseListener());
 
-/*        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ImageView image = (ImageView) view.findViewById(R.id.gridViewItem);
-
-                MediaMetadataRetriever mediaMetadataRetriever= new MediaMetadataRetriever();
-                mediaMetadataRetriever.setDataSource(videos.get(position));
-
-                Bitmap[] frames = new Bitmap[5];
-                int counter = 0;
-                for(long i = 0; i < 60000000; i+=12000000) {
-                    frames[counter++] = mediaMetadataRetriever.getFrameAtTime(i);
-                }
-
-                thread = new Runnable() {
-                    @Override
-                    public void run() {
-                        if(tmp > 4)
-                            tmp = 0;
-
-                        image.setImageBitmap(frames[tmp++]);
-                        handler.postDelayed(this, 500);
-                    }
-                };
-
-                handler.postDelayed(thread, 1000);
-
-                return true;
-            }
-        });*/
     }
 
     private ArrayList<Integer> getImages() {
