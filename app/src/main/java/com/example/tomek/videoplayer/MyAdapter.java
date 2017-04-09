@@ -1,9 +1,6 @@
 package com.example.tomek.videoplayer;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
@@ -12,10 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.VideoView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,11 +19,11 @@ import java.util.List;
  */
 
 public class MyAdapter extends BaseAdapter {
-    private List<Integer>  mData;
+    private List<String>  mData;
     private Context mContext;
     private LayoutInflater inflater;
 
-    public MyAdapter(ArrayList<Integer> mData, Context mContext) {
+    public MyAdapter(List<String> mData, Context mContext) {
         this.mData = mData;
         this.mContext = mContext;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,7 +51,7 @@ public class MyAdapter extends BaseAdapter {
         if(convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.gridview_item, null);
-            viewHolder.image = (ImageView) convertView.findViewById(R.id.gridViewItem);
+            viewHolder.video = (VideoView) convertView.findViewById(R.id.gridViewItem);
             convertView.setTag(viewHolder);
         }
         else {
@@ -74,16 +70,18 @@ public class MyAdapter extends BaseAdapter {
         int displayHeigth = metrics.heightPixels;
         int imageHeight = displayHeigth/4;
 
-        Drawable drawable = ContextCompat.getDrawable(mContext, mData.get(position));
-        viewHolder.image.setImageDrawable(drawable);
-        LinearLayout linearLayout = (LinearLayout) convertView.findViewById(R.id.rowLayout);
-        linearLayout.setLayoutParams(new LinearLayout.LayoutParams((int)metrics.widthPixels/2, imageHeight));
+        viewHolder.video.setVideoPath(mData.get(position));
+        viewHolder.video.seekTo(20000);
+        viewHolder.video.setId(20000 + position);
+
+        RelativeLayout linearLayout = (RelativeLayout) convertView.findViewById(R.id.rowLayout);
+        linearLayout.setLayoutParams(new RelativeLayout.LayoutParams((int)metrics.widthPixels/2, imageHeight));
 
         return convertView;
     }
 
     private class ViewHolder {
-        ImageView image;
+        VideoView video;
     }
 
 
